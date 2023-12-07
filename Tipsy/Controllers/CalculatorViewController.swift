@@ -17,6 +17,8 @@ class CalculatorViewController: UIViewController {
     @IBOutlet weak var splitNumberLabel: UILabel!
 
     var tip = 0.10
+    var numberOfPeople = 2
+    var billTotal = 0.0
     
     @IBAction func tipChanged(_ sender: UIButton) {
         
@@ -44,10 +46,33 @@ class CalculatorViewController: UIViewController {
     
 
     @IBAction func calculatePressed(_ sender: UIButton) {
+        
+        let bill = billTextField.text!
+                
+                //If the text is not an empty String ""
+        if bill != "" {
+            
+            //Turn the bill from a String e.g. "123.50" to an actual String with decimal places.
+            //e.g. 125.50
+            billTotal = Double(bill)!
+            
+            //Multiply the bill by the tip percentage and divide by the number of people to split the bill.
+            let result = billTotal * (1 + tip) / Double(numberOfPeople)
+            
+            //Round the result to 2 decimal places and turn it into a String.
+            let resultTo2DecimalPlaces = String(format: "%.2f", result)
+            
+            print(resultTo2DecimalPlaces)
+            
+            
+        }
     }
     
     
     @IBAction func stepsValueChanged(_ sender: UIStepper) {
+        
+        splitNumberLabel.text = String(format: "%.0f", sender.value)
+        numberOfPeople = Int(sender.value)
     }
     
     
